@@ -17,6 +17,8 @@ namespace DataHub.Service.Mapping
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<CompanyFeature, CompanyFeatureDto>().ReverseMap();
             CreateMap<CompanyUpdateDto, Company>();
+            CreateMap<Company, CompanyWithCategoryDto>();
+            CreateMap<Category, CategoryWithCompaniesDto>();
         }
     }
 }

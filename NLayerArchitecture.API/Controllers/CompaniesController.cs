@@ -7,23 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataHub.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    
     public class CompaniesController : CustomBaseController
     {
         private readonly IMapper _mapper;
-        private readonly IService<Company> _service;
+        private readonly ICompanyService _companyService;
 
-        public CompaniesController(IService<Company> service, IMapper mapper)
+        public CompaniesController(IMapper mapper, ICompanyService companyService)
         {
-            _service = service;
             _mapper = mapper;
+            _companyService = companyService;
+        }
+
+        [HttpGet("action")]
+        public async Task<IActionResult> GetCompaniesWithCategory()
+        {
+            return CreateActionResult(await _companyService.GetCompanyWithCategory());
         }
 
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            var companies = await _service.GetAllAsync();
+            var companies = await _companyService.GetAllAsync();
             var companiesDtos = _mapper.Map<List<CompanyDto>>(companies.ToList());
             return CreateActionResult(CustomResponseDto<List<CompanyDto>>.Success(200, companiesDtos)); 
         }
@@ -31,7 +36,7 @@ namespace DataHub.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var company = await _service.GetByIdAsync(id);
+            var company = await _companyService.GetByIdAsync(id);
             var companiesDto = _mapper.Map<CompanyDto>(company);
             return CreateActionResult(CustomResponseDto<CompanyDto>.Success(200, companiesDto));
         }
@@ -39,7 +44,7 @@ namespace DataHub.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(CompanyDto companyDto)
         {
-            var company = await _service.AddAsync(_mapper.Map<Company>(companyDto));
+            var company = await _companyService.AddAsync(_mapper.Map<Company>(companyDto));
             var companiesDto = _mapper.Map<CompanyDto>(company);
             return CreateActionResult(CustomResponseDto<CompanyDto>.Success(200, companiesDto));
         }
@@ -47,15 +52,15 @@ namespace DataHub.API.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(CompanyUpdateDto companyDto)
         {
-            await _service.UpdateAsync(_mapper.Map<Company>(companyDto));
+            await _companyService.UpdateAsync(_mapper.Map<Company>(companyDto));
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
-            var company = await _service.GetByIdAsync(id);
-            await _service.RemoveAsync(company);
+            var company = await _companyService.GetByIdAsync(id);
+            await _companyService.RemoveAsync(company);
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
 
