@@ -2,12 +2,12 @@
 using NLayerArchitecture.Core.DTOs;
 using NLayerArchitecture.Core.Models;
 using NLayerArchitecture.Core.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLayerArchitecture.API.Filters;
 
 namespace DataHub.API.Controllers
 {
-    
+    [ValidateFilterAttribute]
     public class CompaniesController : CustomBaseController
     {
         private readonly IMapper _mapper;

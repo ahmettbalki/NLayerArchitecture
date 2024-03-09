@@ -1,10 +1,12 @@
 ﻿using DataHub.API.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLayerArchitecture.API.Filters;
 using NLayerArchitecture.Core.Services;
 
 namespace NLayerArchitecture.API.Controllers
 {
+    [ValidateFilterAttribute]
     public class CategoriesController : CustomBaseController
     {
         private readonly ICategoryService _categoryService;
