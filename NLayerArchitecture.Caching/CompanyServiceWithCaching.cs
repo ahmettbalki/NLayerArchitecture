@@ -6,12 +6,7 @@ using NLayerArchitecture.Core.Models;
 using NLayerArchitecture.Core.Repositories;
 using NLayerArchitecture.Core.Services;
 using NLayerArchitecture.Core.UnitOfWorks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLayerArchitecture.Caching
 {
@@ -73,11 +68,11 @@ namespace NLayerArchitecture.Caching
             return Task.FromResult(company);
         }
 
-        public Task<CustomResponseDto<List<CompanyWithCategoryDto>>> GetCompanyWithCategory()
+        public Task<List<CompanyWithCategoryDto>> GetCompanyWithCategory()
         {
             var companies = _memoryCache.Get<IEnumerable<Company>>(CacheCompanyKey);
             var companiesWithCategoryDto = _mapper.Map<List<CompanyWithCategoryDto>>(companies);
-            return Task.FromResult(CustomResponseDto<List<CompanyWithCategoryDto>>.Success(200, companiesWithCategoryDto));
+            return Task.FromResult(companiesWithCategoryDto);
         }
 
         public async Task RemoveAsync(Company entity)

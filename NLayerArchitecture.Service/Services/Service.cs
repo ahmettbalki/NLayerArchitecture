@@ -1,14 +1,9 @@
-﻿using NLayerArchitecture.Core.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using NLayerArchitecture.Core.Repositories;
 using NLayerArchitecture.Core.Services;
 using NLayerArchitecture.Core.UnitOfWorks;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using NLayerArchitecture.Service.Exceptions;
+using System.Linq.Expressions;
 
 namespace DataHub.Service.Services
 {

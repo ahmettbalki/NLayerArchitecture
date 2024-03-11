@@ -3,11 +3,6 @@ using DataHub.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
 using NLayerArchitecture.Core.Models;
 using NLayerArchitecture.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLayerArchitecture.Repository.Repositories
 {

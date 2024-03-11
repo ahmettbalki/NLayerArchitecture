@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@model List<CompanyWithCategoryDto>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Industry</td>
+                <td>FoundedData</td>
+                <td>Category</td>
+                <td>CreatedDate</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Industry</td>
+                <td>@item.FoundedData</td>
+                <td>@item.Category.Name</td>
+                <td>@item.CreatedDate</td>
+            </tr>
+        }
+        </tbody>
+    </table>
