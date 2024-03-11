@@ -19,12 +19,7 @@ namespace DataHub.API.Controllers
             _companyService = companyService;
         }
 
-        [HttpGet("action")]
-        public async Task<IActionResult> GetCompaniesWithCategory()
-        {
-            return CreateActionResult(await _companyService.GetCompanyWithCategory());
-        }
-
+        
         [HttpGet]
         public async Task<IActionResult> All()
         {

@@ -2,14 +2,17 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DataHub.Repository;
 using DataHub.Service.Mapping;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using NLayerArchitecture.Service.Validations;
 using NLayerArchitecture.Web.Modules;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation(x =>
+x.RegisterValidatorsFromAssemblyContaining<CompanyDtoValidator>());
 builder.Services.AddAutoMapper(typeof(MapProfile));
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
