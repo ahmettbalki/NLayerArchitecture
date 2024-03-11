@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace NLayerArchitecture.Service.Services
 {
-    public class CompanyService : Service<Company>, ICompanyService
+    public class CompanyServiceWithNoCaching : Service<Company>, ICompanyService
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
-        public CompanyService(IGenericRepository<Company> repository, IUnitOfWork unitOfWork, ICompanyRepository companyRepository, IMapper mapper) : base(repository, unitOfWork)
+        public CompanyServiceWithNoCaching(IGenericRepository<Company> repository, IUnitOfWork unitOfWork, ICompanyRepository companyRepository, IMapper mapper) : base(repository, unitOfWork)
         {
             _companyRepository = companyRepository;
             _mapper = mapper;

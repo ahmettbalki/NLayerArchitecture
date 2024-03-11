@@ -9,6 +9,7 @@ using DataHub.Service.Services;
 using NLayerArchitecture.Core.Services;
 using DataHub.Repository.UnitOfWorks;
 using NLayerArchitecture.Core.UnitOfWorks;
+using NLayerArchitecture.Caching;
 
 namespace NLayerArchitecture.API.Modules
 {
@@ -27,6 +28,7 @@ namespace NLayerArchitecture.API.Modules
             builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly).Where(x => x.Name.EndsWith("Repository")).AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly).Where(x => x.Name.EndsWith("Service")).AsImplementedInterfaces().InstancePerLifetimeScope();
 
+            builder.RegisterType<CompanyServiceWithCaching>().As<ICompanyService>();
         }
     }
 }
