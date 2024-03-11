@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using NLayerArchitecture.Service.Exceptions;
 
 namespace DataHub.Service.Services
 {
@@ -48,7 +49,12 @@ namespace DataHub.Service.Services
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _repository.GetByIdAsync(id);
+            var hasCompany = await _repository.GetByIdAsync(id);
+            if (hasCompany == null)
+            {
+                throw new NotFoundException($"{typeof(T).Name}({id}) not found");
+            }
+            return hasCompany;
         }
 
         public async Task RemoveAsync(T entity)

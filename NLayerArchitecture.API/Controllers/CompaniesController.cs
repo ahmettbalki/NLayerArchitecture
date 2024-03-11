@@ -33,6 +33,7 @@ namespace DataHub.API.Controllers
             return CreateActionResult(CustomResponseDto<List<CompanyDto>>.Success(200, companiesDtos)); 
         }
 
+        [ServiceFilter(typeof(NotFoundFilter<Company>))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {

@@ -14,6 +14,10 @@ using FluentValidation.AspNetCore;
 using NLayerArchitecture.Service.Validations;
 using NLayerArchitecture.API.Filters;
 using Microsoft.AspNetCore.Mvc;
+using NLayerArchitecture.API.Middlewares;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using NLayerArchitecture.API.Modules;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,17 +34,10 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
+builder.Services.AddScoped(typeof(NotFoundFilter<>));
+
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
-builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
-builder.Services.AddScoped<ICompanyService, CompanyService>();
-
-
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
@@ -49,6 +46,10 @@ builder.Services.AddDbContext<AppDbContext>(x =>
         options.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
     });
 });
+
+builder.Host.UseServiceProviderFactory
+    (new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
 
 var app = builder.Build();
 
@@ -60,6 +61,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCustomExpection();
 
 app.UseAuthorization();
 
